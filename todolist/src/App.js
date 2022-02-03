@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { TextField, Button } from "@mui/material";
+import Todo from "./components/Todo";
+import "./App.css";
+import Todolist from "./components/Todolist";
 
 function App() {
+  const [todos, setTodos] = useState(["Shower", "Sleep"]);
+  const [input, setInput] = useState("");
+
+  const inputHandler = (event) => {
+    setInput(event.target.value);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    setTodos([...todos, input]);
+    setInput("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1>Todolist</h1>
+      <form action="">
+        <TextField
+          id="standard-basic"
+          label="Enter a task"
+          variant="standard"
+          value={input}
+          onChange={inputHandler}
+        />
+        <Button
+          disabled={!input}
+          variant="contained"
+          type="submit"
+          onClick={submitHandler}
         >
-          Learn React
-        </a>
-      </header>
+          Add to do
+        </Button>
+      </form>
+      <Todolist todos={todos} />
     </div>
   );
 }
